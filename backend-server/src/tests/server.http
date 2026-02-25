@@ -1,0 +1,102 @@
+
+### Service Health-Check Endpoint
+GET http://127.0.0.1:5000/health HTTP/1.1
+
+
+
+
+
+###GET ALL USERS
+GET http://127.0.0.1:5000/users HTTP/1.1
+
+
+###GET SINGLE USERS
+GET http://127.0.0.1:5000/users/1 HTTP/1.1
+
+
+###CREATE NEW USER
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Shlomtzion Nice"
+}
+
+###DELETE USER BY ID
+DELETE http://127.0.0.1:5000/users/1 HTTP/1.1
+
+
+###UPDATE  USER
+PUT http://127.0.0.1:5000/users/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Shlomtzion Nice!!!!!!!!!!"
+}
+
+###Testing Creating Tenant
+POST http://127.0.0.1:5000/tenant
+Content-Type: application/json
+
+{
+  "tenantName": "Shlomi king",
+  "buyerId": "65d9f8a1c4b2a7e91f0a1234"
+}
+
+###Testing Creating Tenant
+PUT http://127.0.0.1:5000/tenant/699eb80a99e3b9a131c2adc4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "tenantName": "Shlomi king!123312!!",
+  "buyerId": "65d9f8a1c4b2a7e91f0a4321"
+}
+###GET TENANTS
+GET http://127.0.0.1:5000/tenants HTTP/1.1
+
+###GET TENANTS
+GET http://127.0.0.1:5000/tenant/699eb397c5e6f3ab9b4c2a84 HTTP/1.1
+
+###GET COMPANIES
+GET http://127.0.0.1:5000/companies HTTP/1.1
+
+###GET COMPANY
+GET http://127.0.0.1:5000/company/699edc324180dd60cad1a960 HTTP/1.1
+
+###CREATE COMPANY:
+POST http://127.0.0.1:5000/company HTTP/1.1
+Content-Type: application/json
+
+{
+  "companyIndustryId": "64f4b0e2a8f2c1d234567891",
+  "companyName": "COMOBOBOBOB Cyber",
+  "tenantId": "64f4b0e2a8f2c1d234567890",
+  "country": "Israel",
+  "language": "Hebrew"
+}
+
+###GET TENANT COMPANIES:
+GET http://127.0.0.1:5000/company/tenant/64f4b0e2a8f2c1d234567890 HTTP/1.1
+
+
+
+###UPDATE COMPANY:
+PUT http://127.0.0.1:5000/company/699edbda2ea1d4ce8fe4a80C HTTP/1.1
+Content-Type: application/json
+
+{
+    "tenantId": "64f4b0e2a8f2c1d234511111"
+
+}
+
+# {
+#     "_id": "699ef1cb54d08abdac52410f",
+#     "tenantId": "64f4b0e2a8f2c1d234567890",
+#     "companyName": "Shlomi king TEST",
+#     "companyIndustryId": "64f4b0e2a8f2c1d234567891",
+#     "companyWebsiteUrl": "https://www.globaltech123123.com",
+#     "country": "Israel",
+#     "language": "Hebrew",
+#     "createdAt": "2026-02-25T12:57:47.613Z",
+#     "updatedAt": "2026-02-25T12:57:47.613Z"
+#   }
