@@ -1,4 +1,4 @@
-const { User } = require('../user/user.routes')
+const { User } = require('../user/user.validation')
 const tenantController = require('./tenant.controller')
 
 const Tenant ={
@@ -6,7 +6,7 @@ const Tenant ={
     properties: {
         _id: {type : 'string'},
         tenantName : {type: 'string'},
-        buyerId: User.properties.id
+        buyerId: {type: 'string'}
     }
 }
 

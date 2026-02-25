@@ -5,10 +5,10 @@ const userSchema = new mongoose.Schema({
     name: String,
     lastName: String,
     phoneNumber: String,
-    companyId: {
+    companyId: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref:"Company"
-    },
+    }],
     role_id: {
         type: mongoose.SchemaTypes.ObjectId,
         ref:"Role"

@@ -21,7 +21,7 @@ const Company = {
     }
 }
 
-const getCompaniesOpt = {
+const getCompaniesOpts = {
     schema: {
             tags: ['Company'],
             summary: 'Get all companies',
@@ -65,7 +65,7 @@ const postCompanyOpts = {
   handler: companyController.createCompany
 }
 
-const getTenantCompaniesOpt = {
+const getTenantCompaniesOpts = {
     schema: {
             tags: ['Company'],
             summary: 'Get all companies',
@@ -91,9 +91,9 @@ const updateCompanyOpts = {
 }
 
 module.exports = {
-    getCompaniesOpt,
+    getCompaniesOpts,
     getCompanyOpts,
     postCompanyOpts,
-    getTenantCompaniesOpt,
+    getTenantCompaniesOpts,
     updateCompanyOpts
 }

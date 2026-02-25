@@ -24,7 +24,7 @@ const roleSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"ExposureCategory"
     }],
-    specificRoleRisks: [{
+    roleRisks:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Risk"
     }]

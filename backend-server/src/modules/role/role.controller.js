@@ -1,12 +1,12 @@
-const userService = require('./user.service')
+const roleService = require('./role.service')
 
-const getUsers = async (req, reply) => {
+const getRoles = async (req, reply) => {
     try {
-        const users = await userService.getUsersInformation()
+        const roles = await roleService.getRolesInformation()
         return reply
         .code(200)
         .header('Content-Type', 'application/json; charset=utf-8')
-        .send(users)
+        .send(roles)
     } catch(err) {
         return reply
         .code(500)
@@ -15,19 +15,34 @@ const getUsers = async (req, reply) => {
     }
 }
 
-
-const getUser = async (req, reply) => {
-    try{
-        const { userId } = req.params
-        if (!userId){
-            return reply
-            .send(`Invalide User Id: ${userId}`)
-        }
-        const respUser = await userService.getUserInformation(userId)
+const getIndustryRoles = async (req, reply) => {
+    try {
+        const industryId  = req.params
+        const role = await roleService.getIndustryRolesInformation(industryId.industryId)
         return reply
         .code(200)
         .header('Content-Type', 'application/json; charset=utf-8')
-        .send(respUser)
+        .send(role)
+    } catch(err) {
+        return reply
+        .code(500)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send({ response: 'Error - Connection to DB', error: err.message });
+    }
+}
+
+const getRole = async (req, reply) => {
+    try{
+        const { roleId } = req.params
+        if (!roleId){
+            return reply
+            .send(`Invalide role Id: ${roleId}`)
+        }
+        const respRole = await roleService.getRoleInformation(roleId)
+        return reply
+        .code(200)
+        .header('Content-Type', 'application/json; charset=utf-8')
+        .send(respRole)
     } catch (err) {
         return reply
         .code(500)
@@ -36,44 +51,27 @@ const getUser = async (req, reply) => {
     }
 }
 
-const getCompanyUsers = async (req, reply) => {
-    try {
-        const companyId  = req.params
-        const users = await userService.getCompanyUsersInformation(companyId)
-        return reply
-        .code(200)
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(users)
-    } catch(err) {
-        return reply
-        .code(500)
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send({ response: 'Error - Connection to DB', error: err.message });
-    }
-}
-
-const createUser = async (req,reply) => {
+const createRole = async (req, reply) => {
     try {
         const { 
-            name,
-            lastName,
-            phoneNumber,
+            roleName,
+            roleDescription,
             companyId,
-            role_id,
-            userType,
-            email
-         }  = req.body
-        if (!name || !lastName || !phoneNumber || !role_id || !companyId) {
+            industryId,
+            exposureCategories,
+            roleRisks
+        }  = req.body
+        if (!industryId && !roleName) {
             return reply
-            .send(`Invalide User information`)
+            .send(`Invalide Role information`)
         }
-        const newUser =  await userService.createNewUser(
-            name, lastName, phoneNumber, companyId, role_id, userType, email
+        const newRole =  await roleService.createNewRole(
+            roleName, roleDescription, companyId, industryId, exposureCategories, roleRisks
         )
         return reply
             .code(200)
             .header('Content-Type', 'application/json; charset=utf-8')
-            .send(newUser)
+            .send(newRole)
     } catch (err) {
         return reply
         .code(500)
@@ -82,28 +80,27 @@ const createUser = async (req,reply) => {
     }   
 }
 
-const updateUser = async (req, reply) => {
+const updateRole = async (req, reply) => {
     try{
-        const { userId } = req.params
-        if (!userId) {
-            return userId.send('userId not provided')
+        const { roleId } = req.params
+        if (!roleId) {
+            return reply.send('roleId not provided')
         } else {
             const { 
-                name,
-                lastName,
-                phoneNumber,
+                roleName,
+                roleDescription,
                 companyId,
-                role_id,
-                userType,
-                email
-            }  = req.body            
-            const updateUser = await userService.updateUser(
-                userId, name, lastName, phoneNumber, companyId, role_id, userType, email
+                industryId,
+                exposureCategories,
+                roleRisks
+            }  = req.body
+            const updateRole = await roleService.updateRole(
+                roleId, roleName, roleDescription, companyId, industryId, exposureCategories, roleRisks
             )
             return reply
             .code(200)
             .header('Content-Type', 'application/json; charset=utf-8')
-            .send(updateUser)
+            .send(updateRole)
         }
     }catch (err){
         return reply
@@ -113,10 +110,11 @@ const updateUser = async (req, reply) => {
     }
 }
 
+
 module.exports = {
-    getUsers,
-    getUser,
-    getCompanyUsers,
-    createUser,
-    updateUser
+    getRoles,
+    getRole,
+    createRole,
+    getIndustryRoles,
+    updateRole
 }

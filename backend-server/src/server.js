@@ -2,6 +2,10 @@ const connectDB = require('../src/config/database')
 const { userRoutes } = require('./modules/user/user.routes');
 const { tenantRoutes } = require('./modules/tenant/tenant.routes')
 const { companyRoutes } = require('./modules/company/company.routes')
+const { industryRoutes } = require('./modules/industry/industry.routes')
+const { exposureCategoryRoutes } = require('./modules/exposureCategory/exposureCategory.routes')
+const { roleRoutes } = require('./modules/role/role.routes')
+
 
 connectDB()
 
@@ -25,14 +29,10 @@ fastify.register(require('@fastify/swagger-ui'), {
 //API Endpoints/Routes:
 fastify.register(userRoutes)
 fastify.register(companyRoutes)
-// fastify.register(require('../src/modules/company/company.routes'))
-// fastify.register(require('../src/modules/exposureCategory/exposureCategory.routes'))
-// fastify.register(require('../src/modules/file/file.routes'))
-// fastify.register(require('../src/modules/industry/industry.routes'))
-// fastify.register(require('../src/modules/risk/risk.routes'))
-// fastify.register(require('../src/modules/role/role.routes'))
-// fastify.register(require('../src/modules/task/task.routes'))
+fastify.register(industryRoutes)
+fastify.register(exposureCategoryRoutes)
 fastify.register(tenantRoutes)
+fastify.register(roleRoutes)
 
 
 

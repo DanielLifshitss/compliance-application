@@ -14,7 +14,20 @@ const exposureCategorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"Risk"
     }],
-    exposureCategoryWeight: Number
+    exposureCategoryWeight: {
+        type: Number,
+        default: 1
+    },
+    createdAt: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now()
+    },
+    updatedAt: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now()
+    }
 })
 
 

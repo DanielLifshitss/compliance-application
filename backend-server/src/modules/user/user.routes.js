@@ -1,108 +1,20 @@
-const { getUser, getUsers , addUser, deleteUser, updateUser } = require('./user.controller')
-
-const User = {
-  type: 'object',
-  properties: {
-    id: { type: 'string' },
-    name: { type: 'string' },
-    lastName: {type: 'string'},
-    phoneNumber: {type: 'string'},
-    companyId: {type:'string'},
-    roldeId: {type: 'string'},
-    userType: {type: 'string'},
-    email: {type: 'string'},
-    createdAt: {
-      type: 'string',
-       format: 'date-time'
-      },
-    updatedAt: {
-      type: 'string',
-       format: 'date-time'
-      },
-
-  }
-}
-
-const getUsersOpts = {
-  schema: {
-    tags: ['Users'],
-    summary: 'Get all users',
-    response: {
-      200: {
-        type: 'array',
-        items: User
-      }
-    }
-  },
-  handler: getUsers
-}
-
-const getUserOpts = {
-  schema: {
-    tags: ['Users'],
-    summary: 'Get user by ID',
-    response: {
-      201: User
-    }
-  },
-  handler: getUser
-}
-
-const postUserOpts = {
-  schema: {
-    body: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' }
-      },
-      required: ['name']
-    },
-    tags: ['Users'],
-    summary: 'Get user by ID',
-    response: {
-      200: User,
-      
-    },
-    required:['name']
-  },
-  handler: addUser
-}
-
-const deleteUserOpts = {
-  schema: {
-    tags: ['Users'],
-    summary: 'Delete user by ID',
-    response: {
-      201: User,
-      
-    },
-    required:['id']
-  },
-  handler: deleteUser
-}
-
-const updateUserOpts = {
-  schema: {
-    tags: ['Users'],
-    summary: 'Get user by ID',
-    response: {
-      201: User
-    }
-  },
-  handler: updateUser
-}
+const userValidation = require('./user.validation')
 
 async function userRoutes (fastify, options) {
-  fastify.get('/users', getUsersOpts)
-  fastify.get('/users/:id', getUserOpts)
-//   Create User
-  fastify.post('/users', postUserOpts)
+  //Get Users
+  fastify.get('/users', userValidation.getUsersOpt)
 
-//   Delete User
-  fastify.delete('/users/:id',deleteUserOpts)
+  //Get User
+  fastify.get('/users/:userId', userValidation.getUserOpts)
 
-//   Update User
-    fastify.put('/users/:id', updateUserOpts)
+  //Get Company Users
+  fastify.get('/company/:companyId/users', userValidation.getCompanyUsersOpts)
+
+  //Create User
+  fastify.post('/users', userValidation.postUserOpts)
+
+  //   //Update User
+    fastify.put('/users/:userId', userValidation.updateUserOpts )
 }
 
-module.exports = { userRoutes, User }
+module.exports = { userRoutes }

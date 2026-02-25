@@ -11,15 +11,26 @@ GET http://127.0.0.1:5000/users HTTP/1.1
 
 
 ###GET SINGLE USERS
-GET http://127.0.0.1:5000/users/1 HTTP/1.1
+GET http://127.0.0.1:5000/users/699f45c3e84a405d1afc786b HTTP/1.1
 
+
+###GET ALL USERS IN COMPANY
+GET http://127.0.0.1:5000/company/65f1c9b2a4d8c1a123456789/users HTTP/1.1
 
 ###CREATE NEW USER
 POST http://127.0.0.1:5000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Shlomtzion Nice"
+  "name": "shlomik ",
+  "lastName": "zion",
+  "phoneNumber": "+972501234227",
+  "companyId": [
+    "65f1c9b2a4d8c1a123456789"
+  ],
+  "role_id": "65f1c9b2a4d8c1a111111111",
+  "userType": "Access",
+  "email": "shlomik@example.com"
 }
 
 ###DELETE USER BY ID
@@ -27,11 +38,20 @@ DELETE http://127.0.0.1:5000/users/1 HTTP/1.1
 
 
 ###UPDATE  USER
-PUT http://127.0.0.1:5000/users/1 HTTP/1.1
+PUT http://127.0.0.1:5000/users/699f46a301d67aa6ed56d9a1 HTTP/1.1
 Content-Type: application/json
 
+
 {
-    "name":"Shlomtzion Nice!!!!!!!!!!"
+  "name": "slomikkkkk ",
+  "lastName": "ZIONMANNN",
+  "phoneNumber": "+972501234227",
+  "companyId": [
+    "65f1c9b2a4d8c1a123456789"
+  ],
+  "role_id": "65f1c9b2a4d8c1a111111111",
+  "userType": "Access",
+  "email": "shlomik@example.com"
 }
 
 ###Testing Creating Tenant
@@ -100,3 +120,136 @@ Content-Type: application/json
 #     "createdAt": "2026-02-25T12:57:47.613Z",
 #     "updatedAt": "2026-02-25T12:57:47.613Z"
 #   }
+
+
+###GET INDUSTRIES:
+GET http://127.0.0.1:5000/industries HTTP/1.1
+
+
+###CREATE INDUSTRY:
+POST http://127.0.0.1:5000/industry HTTP/1.1
+Content-Type: application/json
+
+{
+  "industryName": "MY MAN333333",
+  "exposureCategories": [
+    "642e9f5f1a2c3b001234abcd",
+    "642e9f5f1a2c3b001234abce",
+    "642e9f5f1a2c3b001234abcf"
+  ]
+}
+
+
+###update INDUSTRY:
+PUT http://127.0.0.1:5000/industry/699f162ff38a0b221dc1af24 HTTP/1.1
+Content-Type: application/json
+
+{
+  "industryName": "MY MAN333333",
+  "exposureCategories": [
+    "642e9f5f1a2c3b001234bbbb",
+    "642e9f5f1a2c3b001234bbbb",
+    "642e9f5f1a2c3b001234bbbb"
+  ]
+}
+
+    # "_id": "699f162ff38a0b221dc1af24",
+    # "industryName": "MY MAN2",
+    # "exposureCategories": [
+    #   "642e9f5f1a2c3b001234abcd",
+    #   "642e9f5f1a2c3b001234abce",
+    #   "642e9f5f1a2c3b001234abcf"
+    # ],
+    # "createdAt": "2026-02-25T15:33:03.864Z",
+    # "updatedAt": "2026-02-25T15:33:03.864Z"
+
+
+
+
+###GET EXPOSURE CATEGORIES:
+GET http://127.0.0.1:5000/exposure-categories HTTP/1.1
+
+###CREATE EXPOSURE CATEGORY:
+POST http://127.0.0.1:5000/exposure-category HTTP/1.1
+Content-Type: application/json
+
+{
+  "companyId": "642e9f5f1a2c3b001234abcd",
+  "categoryName": "Data Privacy23231",
+  "risks": [
+    "642e9f5f1a2c3b001234abcf",
+    "642e9f5f1a2c3b001234abd0"
+  ],
+  "exposureCategoryWeight": 7
+}
+
+
+###UPDATE EXPOSURE CATEGORY:
+PUT http://127.0.0.1:5000/exposure-category/699f20c1e1f2306691621936 HTTP/1.1
+Content-Type: application/json
+
+{
+  "companyId": "642e9f5f1a2c3b001234abcd",
+  "categoryName": "DATA PRIVACY UPDATED",
+  "risks": [
+    "642e9f5f1a2c3b001234abcf"
+  ],
+  "exposureCategoryWeight": 8
+}
+
+# "_id": "699f20c1e1f2306691621936",
+#     "companyId": "642e9f5f1a2c3b001234abcd",
+#     "categoryName": "Data Privacy",
+#     "risks": [
+#       "642e9f5f1a2c3b001234abcf",
+#       "642e9f5f1a2c3b001234abd0"
+#     ],
+#     "exposureCategoryWeight": 7,
+#     "createdAt": "2026-02-25T16:18:09.956Z",
+#     "updatedAt": "2026-02-25T16:18:09.956Z"
+
+
+
+###Get Roles
+GET http://127.0.0.1:5000/roles HTTP/1.1
+
+###Get Roles By Industry
+GET http://127.0.0.1:5000/roles/industry/642e9f5f1a2c3b001234abde
+
+###Get Role
+GET http://127.0.0.1:5000/roles/699f67953f7d2cbec6211bb9
+
+###Create Role
+POST http://127.0.0.1:5000/roles HTTP/1.1
+Content-Type: application/json
+
+{
+  "companyId": "642e9f5f1a2c3b001234abdd",
+  "industryId": "642e9f5f1a2c3b001234abde",
+  "roleName": "Risk Analyst",
+  "roleDescription": "Assesses and monitors potential risks within the company.",
+  "exposureCategories": "642e9f5f1a2c3b001234abdf",
+  "roleRisks": [
+    "642e9f5f1a2c3b001234abe0",
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe2"
+  ]
+}
+
+###Update Role
+PUT http://127.0.0.1:5000/roles/699f67953f7d2cbec6211bb9 HTTP/1.1
+Content-Type: application/json
+
+{
+  "companyId": "642e9f5f1a2c3b001234abdd",
+  "industryId": "642e9f5f1a2c3b001234abde",
+  "roleName": "Risk Analyst THE BESTTT",
+  "roleDescription": "Assesses and monitors potential risks within the company.",
+  "exposureCategories": "642e9f5f1a2c3b001234abdf",
+  "roleRisks": [
+    "642e9f5f1a2c3b001234abe0",
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe2"
+  ]
+}
+
