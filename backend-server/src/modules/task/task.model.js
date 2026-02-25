@@ -11,7 +11,17 @@ const questionaySchema = mongoose.Schema({
     answers:[{
         question:String,
         isRight:Boolean
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now()
+    },
+    updatedAt: {
+        type: Date,
+        immutable: true,
+        default: () => Date.now()
+    }
 })
 
 //Tasks MongoDB Collection:
@@ -36,12 +46,18 @@ const taskSchema = mongoose.Schema({
         immutable: true,
         default: () => Date.now()
     },
-    isAccomplished: Boolean,
+    isAccomplished: {
+        type: Boolean,
+        default: false
+    },
     taskFilePath: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"File"
     },
-    exposeTaskWieght: Number 
+    exposeTaskWieght: {
+        type: Number,
+        default: 1
+    }
 })
 
 module.exports = mongoose.model('Task', taskSchema), mongoose.model('TaskQuestionary', questionaySchema)

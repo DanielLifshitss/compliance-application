@@ -6,6 +6,7 @@ const { industryRoutes } = require('./modules/industry/industry.routes')
 const { exposureCategoryRoutes } = require('./modules/exposureCategory/exposureCategory.routes')
 const { roleRoutes } = require('./modules/role/role.routes')
 const { riskRoutes } = require('./modules/risk/risk.routes')
+const { taskRoutes } = require('./modules/task/task.routes')
 
 connectDB()
 
@@ -34,6 +35,7 @@ fastify.register(exposureCategoryRoutes)
 fastify.register(tenantRoutes)
 fastify.register(roleRoutes)
 fastify.register(riskRoutes)
+fastify.register(taskRoutes)
 
 
 
