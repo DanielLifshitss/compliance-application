@@ -253,3 +253,67 @@ Content-Type: application/json
   ]
 }
 
+
+
+
+###Get Risks
+GET http://127.0.0.1:5000/risks HTTP/1.1
+
+###Get Risk By Exposure Category
+GET http://127.0.0.1:5000/risks/exsposure-category/642e9f5f1a2c3b001234abcd
+
+###Get Risk
+GET http://127.0.0.1:5000/risks/699f7667e24088d9be84f059
+
+###Create Risk
+POST http://127.0.0.1:5000/risks HTTP/1.1
+Content-Type: application/json
+
+{
+  "riskName": "System Downtime Risk",
+  "exposureCategoryId": "642e9f5f1a2c3b001234abdd",
+  "exposureRiskWeight": 8.2,
+  "tasks": [
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe2",
+    "642e9f5f1a2c3b001234abe3",
+    "642e9f5f1a2c3b001234abe4"
+  ],
+  "createdAt": "2026-02-26T11:30:00Z",
+  "updatedAt": "2026-02-26T11:30:00Z"
+}
+
+###Update Risk
+PUT http://127.0.0.1:5000/risks/699f7694e24088d9be84f060 HTTP/1.1
+Content-Type: application/json
+
+{
+  "riskName": "System Downtime Risk!!!!!!!!!!!",
+  "exposureCategoryId": "642e9f5f1a2c3b001234abcd",
+  "exposureRiskWeight": 8.5,
+  "tasks": [
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe1",
+    "642e9f5f1a2c3b001234abe1"
+  ],
+  "createdAt": "2026-02-26T11:30:00Z",
+  "updatedAt": "2026-02-26T11:30:00Z"
+}
+
+  # },
+  # {
+  #   _id: ObjectId('699f7694e24088d9be84f060'),
+  #   riskName: 'System Downtime Risk',
+  #   exposureCategoryId: ObjectId('642e9f5f1a2c3b001234abdd'),
+  #   tasks: [
+  #     ObjectId('642e9f5f1a2c3b001234abe1'),
+  #     ObjectId('642e9f5f1a2c3b001234abe2'),
+  #     ObjectId('642e9f5f1a2c3b001234abe3'),
+  #     ObjectId('642e9f5f1a2c3b001234abe4')
+  #   ],
+  #   exposureRiskWeight: 8.2,
+  #   createdAt: ISODate('2026-02-25T22:24:20.399Z'),
+  #   updatedAt: ISODate('2026-02-25T22:24:20.399Z'),
+  #   __v: 0
+  # }

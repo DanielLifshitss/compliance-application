@@ -30,8 +30,6 @@ async function createNewRole(roleName, roleDescription, companyId, industryId, e
 
 async function updateRole(roleId, roleName, roleDescription, companyId, industryId, exposureCategories, roleRisks) {
     const checkIfExists = await roleRepository.getRoleById(roleId)
-        console.log('NICE')
-
     if (checkIfExists) { 
         await roleRepository.updateRole(
             roleId, roleName, roleDescription, companyId, industryId, exposureCategories, roleRisks

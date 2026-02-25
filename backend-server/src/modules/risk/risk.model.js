@@ -15,7 +15,10 @@ const riskSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Task"
     }],
-    exposureRiskWeight: Number,
+    exposureRiskWeight: {
+        type: Number,
+        default: 1
+    },
     createdAt: {
         type: Date,
         immutable: true,
