@@ -30,6 +30,16 @@ fastify.register(require('@fastify/cors'), {
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 })
 
+fastify.register(require('@fastify/cors'), {
+  origin: 'https://backend-compliance-application.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+})
+
+fastify.register(require('@fastify/cors'), {
+  origin: 'https://compliance-application.vercel.app/login',
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+})
+
 //API Endpoints/Routes:
 fastify.register(userRoutes)
 fastify.register(companyRoutes)
