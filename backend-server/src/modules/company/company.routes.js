@@ -22,6 +22,7 @@ async function companyRoutes(fastify, options){
 
     // //Get Company Risks
     // fastify.get('')
+    
 }
 
 module.exports = { companyRoutes }

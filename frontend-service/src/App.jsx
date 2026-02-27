@@ -1,100 +1,127 @@
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom'
+
 import MainLayout from './layout/MainLayout'
+import LoginPage from './pages/loginPage'
 import HomePage from './pages/HomePage'
-import JobsPage from './pages/JobsPage'
 import NotFound from './pages/NotFound'
-import JobPage, { jobLoader } from './pages/JobPage'
-import AddJobPage from './pages/AddJobPage'
-import EditJobPage from './pages/EditJobPage'
-import TasksPage from './pages/Tasks/TasksPage'
+
 import RisksPage from './pages/Risks/RisksPage'
 import RiskPage, { riskLoader } from './pages/Risks/RiskPage'
 import EditRiskPage from './pages/Risks/EditRiskPage'
-import ExsposureCategoriesPage from './pages/ExposureCategories/ExsposureCategoriesPage'
 
+import TasksPage from './pages/Tasks/TasksPage'
+import ExsposureCategoriesPage from './pages/ExposureCategories/ExsposureCategoriesPage'
+import TaskPage, {taskLoader} from './pages/Tasks/TaskPage'
+import AdminPage from './pages/AdminPage'
+import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 
 const App = () => {
-  const addJob = async (newJob) => {
-    const res = await fetch('/api/jobs', {
-      method: 'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body: JSON.stringify(newJob)
-    })
-    return
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user')
+    if (savedUser) {
+      setUser(JSON.parse(savedUser))
+    }
+  }, [])
+
+  const logout = () => {
+    localStorage.removeItem('user')
+    setUser(null)
   }
 
-  const deleteJob = async (id) => {
-    const res = await fetch(`/api/jobs/${id}`, {
-      method: 'DELETE',
-    })
-    return
-  }
-  
-  const updateJob = async (job) => {
-    const res = await fetch(`/api/jobs/${job.id}`, {
-      method: 'PUT',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body: JSON.stringify(job)
-    })
-    return
-  }
+  const exposureCategories = [
+    { _id: '64f1c9b2a4d8c1a123456789', name: 'Financial' },
+    { _id: '64f1c9b2a4d8c1a987654321', name: 'Operational' },
+    { _id: '64f1c9b2a4d8c1aabcdef01', name: 'Compliance' },
+    { _id: '64f1c9b2a4d8c1aabcdef02', name: 'Strategic' },
+  ]
 
   const deleteRisk = async (id) => {
-    const res = await fetch(`http://127.0.0.1:5000/risks/${id}`, {
+    await fetch(`http://127.0.0.1:5000/risks/${id}`, {
       method: 'DELETE',
     })
-    return
   }
 
-const exposureCategories = [
-  { _id: '64f1c9b2a4d8c1a123456789', name: 'Financial' },
-  { _id: '64f1c9b2a4d8c1a987654321', name: 'Operational' },
-  { _id: '64f1c9b2a4d8c1aabcdef01', name: 'Compliance' },
-  { _id: '64f1c9b2a4d8c1aabcdef02', name: 'Strategic' },
-]
+  const deleteTask = async (id) => {
+    await fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+      method: 'DELETE'
+    })
+  }
 
-const updateRiskSubmit = async (updatedRisk) => {
+  const updateRiskSubmit = async (updatedRisk) => {
     const { id, ...riskData } = updatedRisk
 
-    const res = await fetch(`http://127.0.0.1:5000/risks/${id}`, {
+    await fetch(`http://127.0.0.1:5000/risks/${id}`, {
       method: 'PUT',
-      headers:{
-        'Content-Type':'application/json'
+      headers: {
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(riskData)
     })
-    return
   }
-
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path='/' element={<MainLayout />}>
-        
-        <Route index element={<HomePage />} />
+      <>
+        <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute user={user}>
+              <MainLayout user={user} logout={logout} />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<HomePage />} />
+          <Route path="risks" element={<RisksPage />} />
+          <Route
+            path="risks/:id"
+            element={<RiskPage deleteRisk={deleteRisk} />}
+            loader={riskLoader}
+          />
+          <Route
+            path="risks/:id/edit"
+            element={
+              <EditRiskPage
+                updateRiskSubmit={updateRiskSubmit}
+                exposureCategories={exposureCategories}
+              />
+            }
+            loader={riskLoader}
+          />
 
-        <Route path='/*' element={<NotFound />} />
+          <Route path="tasks" element={<TasksPage />} />
+          <Route path="exposure-categories" element={<ExsposureCategoriesPage />} />
+          <Route
+              path="tasks/:id"
+              element={<TaskPage deleteTask={deleteTask} />}
+              loader={taskLoader}
+            />
 
-        <Route path='/risks' element={<RisksPage />} />
-        <Route path='/risks/:id' element={<RiskPage deleteRisk={deleteRisk}/>} loader={riskLoader} />
-        <Route path="/risks/:id/edit"
-            element={<EditRiskPage updateRiskSubmit={updateRiskSubmit} exposureCategories={exposureCategories} />}loader={riskLoader}/>
-        
-        <Route path='/tasks' element={<TasksPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute user={user}>
+                <AdminPage user={user} />
+              </AdminRoute>
+            }
+          />
 
-        <Route path='/exposure-categories' element={<ExsposureCategoriesPage />} />
-      </Route>
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </>
     )
   )
 
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

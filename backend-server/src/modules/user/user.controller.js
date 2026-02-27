@@ -38,6 +38,7 @@ const getUser = async (req, reply) => {
 
 const getCompanyUsers = async (req, reply) => {
     try {
+        console.log('NICE')
         const companyId  = req.params
         const users = await userService.getCompanyUsersInformation(companyId)
         return reply

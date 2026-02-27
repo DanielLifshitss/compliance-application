@@ -11,7 +11,6 @@ const { taskRoutes } = require('./modules/task/task.routes')
 connectDB()
 
 
-//Fastify Swagger Configuration:
 const fastify = require('fastify')({ logger: true })
 fastify.register(require('@fastify/swagger'), {
   openapi: {
