@@ -28,14 +28,21 @@ fastify.register(require('@fastify/swagger-ui'), {
   routePrefix: '/docs'
 })
 
-// CORS — allow both local dev and deployed frontend
 fastify.register(require('@fastify/cors'), {
-  origin: [
-    'http://localhost:3000',                         // local React dev
-    'https://compliance-application.vercel.app',    // deployed frontend
-    'https://backend-compliance-application.vercel.app' // optional backend URL if needed
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  origin: (origin, cb) => {
+    // allow requests with no origin (like Postman) and specific frontend origins
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://compliance-application.vercel.app'
+    ]
+    if (!origin || allowedOrigins.includes(origin)) {
+      cb(null, true)
+    } else {
+      cb(new Error(`Origin ${origin} not allowed by CORS`))
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 })
 
 // Register API routes
