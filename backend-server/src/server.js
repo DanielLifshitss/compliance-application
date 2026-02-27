@@ -28,9 +28,9 @@ fastify.register(require('@fastify/swagger-ui'), {
   routePrefix: '/docs'
 })
 
+// ✅ CORS setup
 fastify.register(require('@fastify/cors'), {
   origin: (origin, cb) => {
-    // allow requests with no origin (like Postman) and specific frontend origins
     const allowedOrigins = [
       'http://localhost:3000',
       'https://compliance-application.vercel.app'
@@ -45,17 +45,12 @@ fastify.register(require('@fastify/cors'), {
   credentials: true
 })
 
-// Register API routes
-fastify.register(userRoutes)
-fastify.register(companyRoutes)
-fastify.register(industryRoutes)
-fastify.register(exposureCategoryRoutes)
-fastify.register(tenantRoutes)
-fastify.register(roleRoutes)
-fastify.register(riskRoutes)
-fastify.register(taskRoutes)
+// ✅ Root route
+fastify.get('/', async (req, reply) => {
+  return { message: 'Compliance Backend API is running' }
+})
 
-// Health check endpoint
+// ✅ Health check route
 fastify.get('/health', async (req, reply) => {
   return {
     serverName: 'compliance-backend-service',
@@ -63,11 +58,21 @@ fastify.get('/health', async (req, reply) => {
   }
 })
 
+// ✅ Register API routes with "/api" prefix
+fastify.register(userRoutes, { prefix: '/api' })
+fastify.register(companyRoutes, { prefix: '/api' })
+fastify.register(industryRoutes, { prefix: '/api' })
+fastify.register(exposureCategoryRoutes, { prefix: '/api' })
+fastify.register(tenantRoutes, { prefix: '/api' })
+fastify.register(roleRoutes, { prefix: '/api' })
+fastify.register(riskRoutes, { prefix: '/api' })
+fastify.register(taskRoutes, { prefix: '/api' })
+
 // Start server
 const PORT = 5000
 const start = async () => {
   try {
-    await fastify.listen({ port: PORT, host: '0.0.0.0' }) // host required for Render/Railway
+    await fastify.listen({ port: PORT, host: '0.0.0.0' })
     console.log(`Backend running on port ${PORT}`)
   } catch (error) {
     fastify.log.error(error)
