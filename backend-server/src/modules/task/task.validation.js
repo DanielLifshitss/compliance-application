@@ -1,174 +1,130 @@
-const taskCollector = require('./task.controller')
+const taskCollector = require('./task.controller');
 
-const TaskQuestionay = {
-    type:'object',
-    properties:{
-        _id: {type:'string'},
-        questionTitle: {type: 'string'},
-        questionDescription: {type: 'string'},
-        answers: {
-            type:'array',
-            items: {
-                question: {type: 'string'},
-                isRight: {type: 'boolean'}
-            }
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-    }
-}
+const TaskQuestionary = {
+  type: 'object',
+  properties: {
+    _id: { type: 'string' },
+    questionTitle: { type: 'string' },
+    questionDescription: { type: 'string' },
+    answers: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          question: { type: 'string' },
+          isRight: { type: 'boolean' }
+        }
+      }
+    },
+    createdAt: { type: 'string', format: 'date-time' },
+    updatedAt: { type: 'string', format: 'date-time' }
+  }
+};
 
 const Task = {
-    type:'object',
-    properties:{
-        _id: {type:'string'},
-        taskName: {type: 'string'},
-        taskType: {type: 'string'},
-        taskQuestionary: TaskQuestionay,
-        exposeTaskWieght: {type: 'number'},
-        isAccomplished: {type: 'boolean'},
-        taskFilePath: {type: 'string'},
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-    }
-}
+  type: 'object',
+  properties: {
+    _id: { type: 'string' },
+    taskName: { type: 'string' },
+    taskType: { type: 'string' },
+    taskQuestionary: TaskQuestionary,
+    exposeTaskWieght: { type: 'number' },
+    isAccomplished: { type: 'boolean' },
+    taskFilePath: { type: 'string' },
+    createdAt: { type: 'string', format: 'date-time' },
+    updatedAt: { type: 'string', format: 'date-time' }
+  }
+};
 
 const getTasksOpts = {
-    schema: {
-            tags: ['Tasks'],
-            summary: 'Get all Tasks',
-            response: {
-            200: {
-                type: 'array',
-                items: Task
-            }
-        }
-    },
-    handler: taskCollector.getTasks
-}
+  schema: {
+    tags: ['Tasks'],
+    summary: 'Get all Tasks',
+    response: { 200: { type: 'array', items: Task } }
+  },
+  handler: taskCollector.getTasks
+};
 
 const getTaskOpts = {
-    schema: {
-        tags: ['Task'],
-        summary: 'Get task',
-        response: {
-        200: Tasks
-        }
-    },
-    handler: taskCollector.getTask
-}
+  schema: {
+    tags: ['Tasks'],
+    summary: 'Get Task by ID',
+    response: { 200: Task }
+  },
+  handler: taskCollector.getTask
+};
 
 const postTaskOpts = {
   schema: {
     body: {
       type: 'object',
       properties: {
-        questionTitle: {type: 'string'},
-        questionDescription: {type: 'string'},
-        answers: {
-            type:'array',
-            items: {
-                question: {type: 'string'},
-                isRight: {type: 'boolean'}
-            }
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time'
-        },
+        taskName: { type: 'string' },
+        taskType: { type: 'string' },
+        taskQuestionary: TaskQuestionary,
+        exposeTaskWieght: { type: 'number' },
+        isAccomplished: { type: 'boolean' },
+        taskFilePath: { type: 'string' }
       },
-      required: ['taskName' , 'taskType'],
+      required: ['taskName', 'taskType'],
       additionalProperties: false
     }
   },
   handler: taskCollector.createTask
-}
+};
+
+const updateTaskOpts = {
+  schema: {
+    body: postTaskOpts.schema.body,
+    response: { 201: Task }
+  },
+  handler: taskCollector.updateTask
+};
+
+const getTaskQuestionaryOpts = {
+  schema: {
+    tags: ['Tasks'],
+    summary: 'Get Task Questionary',
+    response: { 200: { type: 'array', items: TaskQuestionary } }
+  },
+  handler: taskCollector.getTaskQuestionary
+};
 
 const postTaskQuestionaryOpts = {
   schema: {
-    body: {
-      type: 'object',
-      properties: {
-        taskName: {type: 'string'},
-        taskType: {type: 'string'},
-        taskQuestionary: TaskQuestionay,
-        exposeTaskWieght: {type: 'number'},
-        isAccomplished: {type: 'boolean'},
-        taskFilePath: {type: 'string'},
-        createdAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time'
-        },
-      },
-      required: ['taskName' , 'taskType'],
-      additionalProperties: false
-    }
+    body: TaskQuestionary,
+    handler: taskCollector.createTaskQuestionary
   },
-  handler: taskCollector.createTask
-}
-
-const getTaskQuestionaryOpts = {
-    schema: {
-            tags: ['Task'],
-            summary: 'Get Task Questionary',
-            response: {
-            200: {
-                type: 'array',
-                items: TaskQuestionay
-            }
-        }
-    },
-    handler: taskCollector.getTaskQuestionary
-}
-
-const updateTaskOpts = {
-    schema: {
-        tags: ['Task'],
-        summary: 'Update Task',
-        response: {
-        201: Task
-        }
-    },
-    handler: taskCollector.updateTask
-}
+  handler: taskCollector.createTaskQuestionary
+};
 
 const updateTaskQuestionaryOpts = {
-    schema: {
-        tags: ['Task'],
-        summary: 'Update Task Questionary',
-        response: {
-        201: TaskQuestionay
-        }
-    },
-    handler: taskCollector.updateTaskQuestionary
-}
+  schema: {
+    body: TaskQuestionary,
+    response: { 201: TaskQuestionary }
+  },
+  handler: taskCollector.updateTaskQuestionary
+};
 
+const getAllTaskQuestionariesOpts = {
+  schema: {
+    tags: ['TaskQuestionary'],
+    summary: 'Get all Task Questionaries',
+    response: {
+      200: {
+        type: 'array',
+        items: TaskQuestionary
+      }
+    }
+  },
+  handler: taskCollector.getTaskQuestionary 
+};
 module.exports = {
-    getTasksOpts,
-    getTaskQuestionaryOpts,
-    getTaskOpts,
-    postTaskOpts,
-    postTaskQuestionaryOpts,
-    updateTaskOpts,
-    updateTaskQuestionaryOpts
-}
+  getTasksOpts,
+  getTaskOpts,
+  postTaskOpts,
+  updateTaskOpts,
+  getTaskQuestionaryOpts,
+  postTaskQuestionaryOpts,
+  updateTaskQuestionaryOpts
+};

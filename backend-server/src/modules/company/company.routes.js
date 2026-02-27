@@ -16,8 +16,6 @@ async function companyRoutes(fastify, options){
     //Update Company
     fastify.put('/company/:companyId', companyValidation.updateCompanyOpts)
 
-    // //Get Company Roles
-    // fastify.get('/company/:companyId/users')
 
     // //Get Company Exposed Categories
     // fastify.get('/company/:companyId/industry/:industryId/exposed-categories')

@@ -26,6 +26,10 @@ fastify.register(require('@fastify/swagger-ui'), {
   routePrefix: '/docs'
 })
 
+fastify.register(require('@fastify/cors'), {
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+})
 
 //API Endpoints/Routes:
 fastify.register(userRoutes)

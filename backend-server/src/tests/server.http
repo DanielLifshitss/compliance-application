@@ -286,7 +286,6 @@ Content-Type: application/json
 ###Update Risk
 PUT http://127.0.0.1:5000/risks/699f7694e24088d9be84f060 HTTP/1.1
 Content-Type: application/json
-
 {
   "riskName": "System Downtime Risk!!!!!!!!!!!",
   "exposureCategoryId": "642e9f5f1a2c3b001234abcd",
@@ -317,3 +316,104 @@ Content-Type: application/json
   #   updatedAt: ISODate('2026-02-25T22:24:20.399Z'),
   #   __v: 0
   # }
+
+  # TASKS ENDPOINTS (Demo Data)
+# ==========================================
+
+### Get all tasks
+GET http://localhost:5000/tasks
+Content-Type: application/json
+
+###
+
+### Get task by ID
+# Replace this ID after creating a task
+GET http://localhost:5000/tasks/69a0bee313ea4b147a254f1b
+Content-Type: application/json
+
+###
+
+### Create a new task
+POST http://localhost:5000/tasks
+Content-Type: application/json
+
+{
+  "taskName": "Complete Compliance Training",
+  "taskType": "regularTask",
+  "exposeTaskWieght": 2,
+  "isAccomplished": false,
+  "taskQuestionary": {
+    "questionTitle": "Compliance Basics",
+    "questionDescription": "Answer the following compliance questions",
+    "answers": [
+      { "question": "What is GDPR?", "isRight": true },
+      { "question": "Is sharing passwords allowed?", "isRight": false }
+    ]
+  }
+}
+
+###
+
+### Update a task
+PUT http://localhost:5000/tasks/69a0bee313ea4b147a254f1b
+Content-Type: application/json
+
+{
+  "taskName": "Complete Advanced Compliance Training",
+  "taskType": "quizzTask",
+  "exposeTaskWieght": 3,
+  "isAccomplished": true,
+  "taskQuestionary": {
+    "questionTitle": "Advanced Compliance Quiz",
+    "questionDescription": "Answer all advanced questions correctly",
+    "answers": [
+      { "question": "Can personal data be shared?", "isRight": false },
+      { "question": "What is a data breach?", "isRight": true }
+    ]
+  }
+}
+
+# ==========================================
+# TASK QUESTIONARIES ENDPOINTS (Demo Data)
+# ==========================================
+
+### Get all task questionaries
+GET http://localhost:5000/tasks/task-questionary
+Content-Type: application/json
+
+###
+
+### Get task questionary by ID
+# Replace this ID after creating a questionary
+GET http://localhost:5000/tasks/task-questionary/642f2a0c7f1c9a2b3c4d5e70
+Content-Type: application/json
+
+###
+
+### Create a new task questionary
+POST http://localhost:5000/tasks/task-questionary/642f2a0c7f1c9a2b3c4d5e70
+Content-Type: application/json
+
+{
+  "questionTitle": "Cybersecurity Awareness",
+  "questionDescription": "Answer the following questions about security policies",
+  "answers": [
+    { "question": "Is using weak passwords okay?", "isRight": false },
+    { "question": "Should you report phishing emails?", "isRight": true }
+  ]
+}
+
+###
+
+### Update a task questionary
+PUT http://localhost:5000/tasks/task-questionary/642f2a0c7f1c9a2b3c4d5e70
+Content-Type: application/json
+
+{
+  "questionTitle": "Updated Cybersecurity Awareness Quiz",
+  "questionDescription": "Updated description for security training",
+  "answers": [
+    { "question": "Is sharing passwords okay?", "isRight": false },
+    { "question": "Should you use two-factor authentication?", "isRight": true }
+  ]
+}
