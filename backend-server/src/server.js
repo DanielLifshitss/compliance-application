@@ -29,18 +29,8 @@ fastify.register(require('@fastify/swagger-ui'), {
 })
 
 fastify.register(require('@fastify/cors'), {
-  origin: (origin, cb) => {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'https://compliance-application.vercel.app'
-    ]
-    if (!origin || allowedOrigins.includes(origin)) {
-      cb(null, true)
-    } else {
-      cb(new Error(`Origin ${origin} not allowed by CORS`))
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: true, 
+  methods: ['GET','POST','PUT','DELETE'],
   credentials: true
 })
 
