@@ -12,7 +12,7 @@ const { taskRoutes } = require('./modules/task/task.routes')
 // Connect to MongoDB
 connectDB()
 
-const fastify = require('fastify')({ logger: true })
+const fastify = require('fastify')({ logger: true , ignoreTrailingSlash: true })
 
 // Swagger
 fastify.register(require('@fastify/swagger'), {
@@ -55,7 +55,6 @@ fastify.get('/health', async (req, reply) => {
   }
 })
 
-// ✅ Register API routes with "/api" prefix
 fastify.register(userRoutes, { prefix: '/api' })
 fastify.register(companyRoutes, { prefix: '/api' })
 fastify.register(industryRoutes, { prefix: '/api' })
@@ -65,7 +64,6 @@ fastify.register(roleRoutes, { prefix: '/api' })
 fastify.register(riskRoutes, { prefix: '/api' })
 fastify.register(taskRoutes, { prefix: '/api' })
 
-// Start server
 const PORT = 5000
 const start = async () => {
   try {
