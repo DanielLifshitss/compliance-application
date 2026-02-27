@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 
+const MONGO_URI = 'mongodb+srv://unicornofsky:0545355269@compliancecluster0.lcdrjdh.mongodb.net/?appName=ComplianceCluster0'
+
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/test1')
-    console.log('MongoDB Connected')
-  } catch (error) {
-    console.error('MongoDB connection failed:', error)
+    await mongoose.connect(MONGO_URI)
+    console.log('MongoDB connected')
+  } catch (err) {
+    console.error('MongoDB connection failed:', err.message)
     process.exit(1)
   }
 }

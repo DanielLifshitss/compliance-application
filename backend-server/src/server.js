@@ -28,7 +28,6 @@ fastify.register(require('@fastify/swagger-ui'), {
   routePrefix: '/docs'
 })
 
-// ✅ CORS setup
 fastify.register(require('@fastify/cors'), {
   origin: (origin, cb) => {
     const allowedOrigins = [
