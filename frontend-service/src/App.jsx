@@ -23,7 +23,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 
 export const API_URL = window.location.hostname.includes('localhost')
-  ? 'http://127.0.0.1:5000/api'
+  ? 'http://127.0.0.1:5000/api/'
   : 'https://backend-compliance-application.vercel.app/api/'
 
 const App = () => {
