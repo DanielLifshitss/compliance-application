@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaArrowLeft } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/Snipper/Spinner'
+import { API_URL } from '../../App'
 
 const ExposureCategoryPage = () => {
   const [categories, setCategories] = useState([])
@@ -11,7 +12,7 @@ const ExposureCategoryPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/exposure-categories')
+        const res = await fetch(`${API_URL}/exposure-categories`)
         if (!res.ok) throw new Error('Failed to fetch exposure categories')
         const data = await res.json()
         setCategories(data)
@@ -31,7 +32,7 @@ const ExposureCategoryPage = () => {
     if (!confirm) return
 
     try {
-      const res = await fetch(`http://127.0.0.1:5000/exposure-category/${categoryId}`, {
+      const res = await fetch(`${API_URL}/exposure-category/${categoryId}`, {
         method: 'DELETE',
       })
       if (!res.ok) throw new Error('Failed to delete')

@@ -22,6 +22,10 @@ import AdminPage from './pages/AdminPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 
+export const API_URL = window.location.hostname.includes('localhost')
+  ? 'http://127.0.0.1:5000'       
+  : 'https://my-backend.onrender.com' 
+
 const App = () => {
   const [user, setUser] = useState(null)
 
@@ -45,13 +49,13 @@ const App = () => {
   ]
 
   const deleteRisk = async (id) => {
-    await fetch(`http://127.0.0.1:5000/risks/${id}`, {
+    await fetch(`${API_URL}/risks/${id}`, {
       method: 'DELETE',
     })
   }
 
   const deleteTask = async (id) => {
-    await fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+    await fetch(`${API_URL}/tasks/${id}`, {
       method: 'DELETE'
     })
   }
@@ -59,7 +63,7 @@ const App = () => {
   const updateRiskSubmit = async (updatedRisk) => {
     const { id, ...riskData } = updatedRisk
 
-    await fetch(`http://127.0.0.1:5000/risks/${id}`, {
+    await fetch(`${API_URL}/risks/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

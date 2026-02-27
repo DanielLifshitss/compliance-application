@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Card from '../components/Card'
+import { API_URL } from '../App'
 
 const LoginPage = ({ setUser }) => {
   const [name, setName] = useState('')
@@ -13,7 +14,7 @@ const LoginPage = ({ setUser }) => {
     setError('')
 
     try {
-      const res = await fetch(`http://127.0.0.1:5000/users`)
+      const res = await fetch(`${API_URL}/users`)
       const users = await res.json()
 
       const existingUser = users.find(

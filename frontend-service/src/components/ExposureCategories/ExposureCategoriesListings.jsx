@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Spinner from '../Snipper/Spinner'
 import ExposureCategoryCard from './ExposureCategoryCard'
 import { fetchExposureCategories } from '../../api/exposureCategory.api'
+import { API_URL } from '../../App'
 
 const ExposureCategoriesListings = ({ isHome = false }) => {
   const [categories, setCategories] = useState([])
@@ -20,7 +21,7 @@ const ExposureCategoriesListings = ({ isHome = false }) => {
             const risksWithNames = await Promise.all(
               cat.risks.map(async (riskId) => {
                 try {
-                  const res = await fetch(`http://127.0.0.1:5000/risks/${riskId}`)
+                  const res = await fetch(`${API_URL}/risks/${riskId}`)
                   if (!res.ok) return 'Unknown Risk'
                   const riskData = await res.json()
                   return riskData.riskName || 'Unnamed Risk'

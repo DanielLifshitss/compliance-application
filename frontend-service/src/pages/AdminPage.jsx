@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Spinner from '../components/Snipper/Spinner'
 import CompanyCard from '../components/Company/CompanyCard'
+import { API_URL } from '../App'
 
 const fetchAdminCompanyAndUsers = async (companyId) => {
-  const companyRes = await fetch(`http://127.0.0.1:5000/company/${companyId}`)
+  const companyRes = await fetch(`${API_URL}/company/${companyId}`)
   if (!companyRes.ok) throw new Error('Failed to fetch company')
   const companyData = await companyRes.json()
 
-  const usersRes = await fetch(`http://127.0.0.1:5000/company/${companyId}/users`)
+  const usersRes = await fetch(`${API_URL}/company/${companyId}/users`)
   if (!usersRes.ok) throw new Error('Failed to fetch company users')
   const usersData = await usersRes.json()
 

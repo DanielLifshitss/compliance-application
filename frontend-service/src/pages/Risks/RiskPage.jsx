@@ -4,6 +4,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/Snipper/Spinner'
+import { API_URL } from '../../App'
 
 const RiskPage = ({ deleteRisk }) => {
   const { id } = useParams()
@@ -20,7 +21,7 @@ const RiskPage = ({ deleteRisk }) => {
       try {
         const tasksWithData = await Promise.all(
           riskData.tasks.map(async (taskId) => {
-            const res = await fetch(`http://127.0.0.1:5000/tasks/${taskId}`)
+            const res = await fetch(`${API_URL}/tasks/${taskId}`)
             if (!res.ok) {
               console.error('Failed to fetch task', taskId)
               return null
@@ -131,7 +132,7 @@ const RiskPage = ({ deleteRisk }) => {
 
 
 const riskLoader = async ({ params }) => {
-  const res = await fetch(`http://127.0.0.1:5000/risks/${params.id}`)
+  const res = await fetch(`${API_URL}/risks/${params.id}`)
   if (!res.ok) throw new Error('Failed to fetch risk')
   const data = await res.json()
   return data

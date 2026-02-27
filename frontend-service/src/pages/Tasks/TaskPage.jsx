@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate, Link } from 'react-router-dom'
 import { FaArrowLeft } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/Snipper/Spinner'
+import { API_URL } from '../../App'
 
 const TaskPage = ({ deleteTask }) => {
   const task = useLoaderData()
@@ -167,7 +168,7 @@ const TaskPage = ({ deleteTask }) => {
 }
 
 const taskLoader = async ({ params }) => {
-  const res = await fetch(`http://127.0.0.1:5000/tasks/${params.id}`)
+  const res = await fetch(`${API_URL}/tasks/${params.id}`)
   if (!res.ok) throw new Error('Failed to fetch task')
   return res.json()
 }

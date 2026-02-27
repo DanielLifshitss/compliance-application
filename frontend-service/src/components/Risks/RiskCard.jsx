@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { API_URL } from '../../App'
 
 const RiskCard = ({ risk }) => {
   const [showTasks, setShowTasks] = useState(false)
@@ -27,7 +28,7 @@ const RiskCard = ({ risk }) => {
     try {
       const results = await Promise.all(
         tasks.map(async (taskId) => {
-          const res = await fetch(`http://127.0.0.1:5000/tasks/${taskId}`)
+          const res = await fetch(`${API_URL}/tasks/${taskId}`)
           if (!res.ok) throw new Error(`Failed to fetch task ${taskId}`)
           return res.json()
         })
