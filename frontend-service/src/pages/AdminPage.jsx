@@ -3,12 +3,10 @@ import Spinner from '../components/Snipper/Spinner'
 import CompanyCard from '../components/Company/CompanyCard'
 
 const fetchAdminCompanyAndUsers = async (companyId) => {
-  // Fetch the company
   const companyRes = await fetch(`http://127.0.0.1:5000/company/${companyId}`)
   if (!companyRes.ok) throw new Error('Failed to fetch company')
   const companyData = await companyRes.json()
 
-  // Fetch the users for that company
   const usersRes = await fetch(`http://127.0.0.1:5000/company/${companyId}/users`)
   if (!usersRes.ok) throw new Error('Failed to fetch company users')
   const usersData = await usersRes.json()
@@ -39,7 +37,6 @@ const AdminPage = ({ user }) => {
     loadData()
   }, [user])
 
-  // Access control: Only Champions
   if (!user || user.userType !== 'Champion') {
     return (
       <section className="py-6">
