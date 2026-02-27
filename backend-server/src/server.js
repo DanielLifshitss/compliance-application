@@ -44,12 +44,10 @@ fastify.register(require('@fastify/cors'), {
   credentials: true
 })
 
-// ✅ Root route
 fastify.get('/', async (req, reply) => {
   return { message: 'Compliance Backend API is running' }
 })
 
-// ✅ Health check route
 fastify.get('/health', async (req, reply) => {
   return {
     serverName: 'compliance-backend-service',
