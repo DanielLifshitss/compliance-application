@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-const MONGO_URI = 'mongodb+srv://unicornofsky:0545355269@compliancecluster0.lcdrjdh.mongodb.net/?appName=ComplianceCluster0'
-
+const MONGO_URI = 'mongodb+srv://unicornofsky:0545355269@compliancecluster0.lcdrjdh.mongodb.net/ComplianceDemo?appName=ComplianceCluster0'
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URI)
@@ -13,3 +12,4 @@ const connectDB = async () => {
 }
 
 module.exports = connectDB
+
